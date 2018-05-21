@@ -12,6 +12,29 @@
           $content=$_POST["noidung"];
           $excerpt=$_POST["tomtat"];
           $images=$_POST["hinhanh"];
+          $thongbao=array(); // man
+
+          if(empty($title)){
+            $thongbao['title']="Mời bạn nhập tên bài viết !!!";
+          }
+          if(empty($excerpt)){
+            $thongbao["excerpt"]="Mòi nhập nội dung tóm tắt !!!";
+          }
+          if(empty($content)){
+            $thongbao["content"]="MƠì nhập nội dung bài viết !!!";
+          }
+          if(empty($thongbao)){
+            $sql="INSERT INTO post (title,excerpt,content,images)
+                  VALUES('{$title}','{$excerpt}','{$content}','{$images}')";
+
+            $query=mysqli_query($conn,$sql);
+
+            if($query){
+              $thongbao["messages"]="Thêm bài viết thành công !!!";
+            }else{
+              $thongbao["messages"]="Thêm bài viết thất bại !!!".mysqli_error($conn);
+            }
+          }
        }
 
 ?>
@@ -19,7 +42,7 @@
 <!DOCTYPE html>
 <html>
       <head>
-            <title>blog ca nhan</title>
+            <title>Thêm bài viết</title>
             <meta charset="utf-8"/>
             <link rel="stylesheet" type="text/css" href="../css/style.css"
       </head>
@@ -35,7 +58,7 @@
                        <ul>
                            <li><a href="../index.php">Trang chủ</a></li>
                            <li><a href="create-post.php">Tạo bài viết</a></li>
-                           <li><a href="#">Đăng nhập</a></li>
+                           <li><a href="">Đăng nhập</a></li>
                            <li><a href="#">Đăng ký</a></li>
                            <li> <a href="index.php">Vào admin</a></li>
                        </ul>
@@ -48,37 +71,82 @@
                               Tạo bài viết mới
                         </h1>
                         <div class="form">
-                          <form method='pót' action="">
+
+                          
+                            <?php 
+                                if(!empty($thongbao["messages"])){
+                                  echo '<div class="message">';
+                                  echo $thongbao["messages"];
+                                  echo " </div>";
+                                }
+
+                             ?>
+                         
+
+                          <form method='post' action="">
                               <table> 
                                   <tr>
                                       <td class="td-title">Tên bài viết</td>
                                        <td>
-                                         <input type="text" name="tenbaiviet" placeholder="Nhập tên bài viết" required="" />
+                                         <input type="text" name="tenbaiviet" placeholder="Nhập tên bài viết" />
                                       </td>
                                   </tr>
+
+                                  <tr>
+                                    <td></td>
+                                    <td>
+                                      <?php 
+                                          if(!empty($thongbao["title"])){
+                                            echo $thongbao["title"];
+                                          }
+                                       ?>
+                                    </td>
+                                  </tr>
+
+
                                    <tr>
                                       <td class="td-title">Nội dung tóm tắt</td>
                                       <td>
-                                        <textarea name="tomtat" placeholder="Nhập nội dung tóm tắt" required=""/></textarea>
+                                        <textarea name="tomtat" placeholder="Nhập nội dung tóm tắt"/></textarea>
                                       </td>
                                    </tr>
+                                    <tr>
+                                      <td></td>
+                                      <td>
+                                        <?php 
+                                            if(!empty($thongbao["excerpt"])){
+                                              echo $thongbao["excerpt"];
+                                            }
+                                         ?>
+                                      </td>
+                                    </tr>
 
                                    <tr>
                                       <td class="td-title">Nội dung</td>
                                       <td>
-                                        <textarea name="noidung" placeholder="Nhập nội dung" required=""/></textarea>
+                                        <textarea name="noidung" placeholder="Nhập nội dung"/></textarea>
                                       </td>
                                    </tr>
+                                  <tr>
+                                    <td></td>
+                                    <td>
+                                      <?php 
+                                          if(!empty($thongbao["content"])){
+                                            echo $thongbao["content"];
+                                          }
+                                       ?>
+                                    </td>
+                                  </tr>
                                    <tr>
                                       <td class="td-title">Hình ảnh</td>
                                        <td>
-                                         <input type="file" name="hinhanh" required="" />
+                                         <input type="file" name="hinhanh"/>
                                       </td>
                                   </tr>
                                   <tr>
                                     <td></td>
                                     <td>
-                                      <button type="submit" name="add-pót">Tạo bài viết</button>
+                                      <button type="submit" name="add-post">Tạo bài viết</button>
                                     </td>
                                   </tr>
                                     

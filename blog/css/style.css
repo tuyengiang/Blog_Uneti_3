@@ -224,6 +224,21 @@ textarea:focus{
 table{
 	width:100%;
 }
+.message{
+	width:100%;
+	height:50px;
+	margin:10px 0 10px 0;
+	line-height:50px;
+	background:#26aa67;
+	color:white;
+	text-align:center;
+	font-size:15px;
+	font-weight:bold;
+}
+td{
+	color:#26aa67;
+	font-size:13px;
+}
 .td-title{
 	width:20%;
 	text-align:right;

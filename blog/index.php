@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
       <head>
-            <title>blog ca nhan</title>
+            <title>Blog Uneti</title>
             <meta charset="utf-8"/>
             <link rel="stylesheet" type="text/css" href="css/style.css"
       </head>

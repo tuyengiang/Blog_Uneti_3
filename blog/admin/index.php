@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
       <head>
-            <title>blog ca nhan</title>
+            <title>Trang quản trị</title>
             <meta charset="utf-8"/>
             <link rel="stylesheet" type="text/css" href="../css/style.css"
       </head>
@@ -28,7 +28,7 @@
                        <ul>
                            <li><a href="../index.php">Trang chủ</a></li>
                            <li><a href="create-post.php">Tạo bài viết</a></li>
-                           <li><a href="#">Đăng nhập</a></li>
+                           <li><a href="list-post.php">Danh sách</a></li>
                            <li><a href="#">Đăng ký</a></li>
                            <li> <a href="index.php">Vào admin</a></li>
                        </ul>
