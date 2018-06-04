@@ -119,7 +119,6 @@ h1{
 	float:left;
 	width:33%;
 	margin-left:20px;
-	height:100px;
 }
 /**titke**/
 
@@ -256,4 +255,17 @@ td{
 	font-weight:bold;
 	font-size:18px;
 	line-height:100px;
+}
+
+.td-content{
+	color:#333;
+	font-size:15px;
+	width:20%;
+	height:100px;
+	line-height:100px;
+	text-align:center;
+}
+.td-content img{
+	width:100%;
+	height:100px;
 }

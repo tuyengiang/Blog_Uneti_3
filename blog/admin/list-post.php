@@ -6,7 +6,6 @@
           die(" Không kết nối được cớ sở dữ liệu").mysqli_error($conn);
 
        }
-
 ?>
 
 <!DOCTYPE html>
@@ -47,20 +46,26 @@
                               <th>Tùy chọn</th>
                         </thead>
                         <tbody>
-                          <?php
-                                  $sql="SELECT * FROM post";
-                                  $query=mysqli_query($conn,$sql);
-                                  while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)):
-  
-                          ?>
-                              <tr>
-                                <td style="text-align:center;color:black;font-size:15px;"><?php echo $row["id"]; ?></td>
-                                <td style="text-align:center;color:black;font-size:15px;"><?php echo $row["title"]; ?></td>
-                                <td style="text-align:center;color:black;font-size:15px;" ><?php echo $row["excerpt"]; ?></td>
-                                <td style="text-align:center;color:black;font-size:15px;"><?php echo $row["images"]; ?></td>
-                              </tr>
-                        <?php endwhile; ?>
-  
+                            <?php
+                                $sql="SELECT * FROM post";
+                                $query=mysqli_query($conn,$sql);
+                                while($row=mysqli_fetch_array($query,MYSQLI_ASSOC)){
+                                    
+                            ?>
+                                <tr>
+                                    <td class="td-content"><?php echo $row["id"]; ?></td>
+                                    <td class="td-content"><?php echo $row["title"]; ?></td>
+                                    <td class="td-content"><?php echo $row["excerpt"]; ?></td>
+                                    <td class="td-content"><img src="../img/<?php echo $row['images']; ?>"></td>
+                                    <td class="td-content">
+                                        <a href="edit-post.php?post=<?php echo $row['id']; ?>">Sửa</a>
+                                        <button type="submit" onclick="return confirm('Bạn muốn xóa bài viết không !!!'); ">
+                                            Xóa</button>
+                                    </td>
+
+                                </tr>
+
+                            <?php } ?>
                         </tbody>
   
                     </table>

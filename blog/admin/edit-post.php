@@ -6,43 +6,54 @@
           die(" Không kết nối được cớ sở dữ liệu").mysqli_error($conn);
 
        }
+?>
 
-       if(isset($_POST["add-post"])){
-          $title=$_POST["tenbaiviet"];
-          $content=$_POST["noidung"];
-          $excerpt=$_POST["tomtat"];
-          $images=$_POST["hinhanh"];
-          $thongbao=array(); // man
+<?php 
+    $id=$_GET['post'];
+    $sql="SELECT * FROM post WHERE id='{$id}'";
+    $query=mysqli_query($conn,$sql);
+    $row=mysqli_fetch_array($query,MYSQLI_ASSOC);
 
-          if(empty($title)){
-            $thongbao['title']="Mời bạn nhập tên bài viết !!!";
-          }
-          if(empty($excerpt)){
-            $thongbao["excerpt"]="Mòi nhập nội dung tóm tắt !!!";
-          }
-          if(empty($content)){
-            $thongbao["content"]="MƠì nhập nội dung bài viết !!!";
-          }
-          if(empty($thongbao)){
-            $sql="INSERT INTO post (title,excerpt,content,images)
-                  VALUES('{$title}','{$excerpt}','{$content}','{$images}')";
+    if(empty($row)){
+        echo "Bài viết không tồn tại or đã bị xóa bởi trang chủ !!!";
+    }else{
+        if(isset($_POST["add-post"])){
+            $title=$_POST["tenbaiviet"];
+            $content=$_POST["noidung"];
+            $excerpt=$_POST["tomtat"];
+            $images=$_POST["hinhanh"];
+            $thongbao=array(); 
+            if(empty($title)){
+                $thongbao['title']="Mời bạn nhập tên bài viết !!!";
+              }
+            if(empty($excerpt)){
+                $thongbao["excerpt"]="Mòi nhập nội dung tóm tắt !!!";
+              }
+            if(empty($content)){
+                $thongbao["content"]="MƠì nhập nội dung bài viết !!!";
+              }
+            if(empty($thongbao)){
+                $sql="UPDATE post SET title='{$title}',content='{$content}',excerpt='{$excerpt}',
+                images='{$images}' WHERE id='{$id}'
+                ";
+                $query=mysqli_query($conn,$sql);
+                if($query){
+                    $thongbao["messages"]="Sửa bài viết thành công !!!";
+                }else{
+                    $thongbao["messages"]="Sửa bài viết thất bại !!! ".mysqli_error($conn);
+                }
 
-            $query=mysqli_query($conn,$sql);
-
-            if($query){
-              $thongbao["messages"]="Thêm bài viết thành công !!!";
-            }else{
-              $thongbao["messages"]="Thêm bài viết thất bại !!!".mysqli_error($conn);
             }
-          }
-       }
+
+        }
+    }
 
 ?>
 
 <!DOCTYPE html>
 <html>
       <head>
-            <title>Thêm bài viết</title>
+            <title>Sửa bài viết</title>
             <meta charset="utf-8"/>
             <link rel="stylesheet" type="text/css" href="../css/style.css"
       </head>
@@ -68,7 +79,7 @@
         <div style="clear:left;"/>  
                   <div class="main">
                         <h1 style="text-align:center;height:40px;line-height:40px;margin:10px 0 10px 0;">
-                              Tạo bài viết mới
+                              Sửa bài viết: <?php echo $row["title"]; ?>
                         </h1>
                         <div class="form">
 
@@ -81,14 +92,13 @@
                                 }
 
                              ?>
-                         
-
+                        
                           <form method='post' action="">
                               <table> 
                                   <tr>
                                       <td class="td-title">Tên bài viết</td>
                                        <td>
-                                         <input type="text" name="tenbaiviet" placeholder="Nhập tên bài viết" />
+                                         <input type="text" name="tenbaiviet" value="<?php echo $row["title"]; ?>"/>
                                       </td>
                                   </tr>
 
@@ -107,7 +117,7 @@
                                    <tr>
                                       <td class="td-title">Nội dung tóm tắt</td>
                                       <td>
-                                        <textarea name="tomtat" placeholder="Nhập nội dung tóm tắt"/></textarea>
+                                        <textarea name="tomtat"><?php echo $row["excerpt"]; ?></textarea>
                                       </td>
                                    </tr>
                                     <tr>
@@ -124,7 +134,7 @@
                                    <tr>
                                       <td class="td-title">Nội dung</td>
                                       <td>
-                                        <textarea name="noidung" placeholder="Nhập nội dung"/></textarea>
+                                        <textarea name="noidung"><?php echo $row["content"]; ?></textarea>
                                       </td>
                                    </tr>
                                   <tr>
@@ -146,12 +156,10 @@
                                   <tr>
                                     <td></td>
                                     <td>
-                                      <button type="submit" name="add-post">Tạo bài viết</button>
+                                      <button type="submit" name="add-post">Sửa bài viết</button>
                                     </td>
                                   </tr>
                                     
-
-
                               </table>
 
 
